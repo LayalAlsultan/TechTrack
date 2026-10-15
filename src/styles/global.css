@@ -1,0 +1,372 @@
+:root {
+  --blackberry: #48182e;
+  --blackberry-deep: #33101f;
+  --kurobeni: #281822;
+  --meadow-flower: #966f82;
+  --pediment: #d4cbc4;
+  --copper-moon: #c49d7a;
+  --moscow-midnight: #214851;
+
+  --bg: #f4f0ed;
+  --surface: #fdfbfa;
+  --line: #e3dbd5;
+  --text: #281822;
+  --text-soft: #6f5b67;
+
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(40, 24, 34, 0.06), 0 8px 24px -12px rgba(72, 24, 46, 0.18);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--blackberry);
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--copper-moon);
+  outline-offset: 3px;
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 260px;
+  padding: 32px 20px;
+  color: var(--pediment);
+  background: linear-gradient(180deg, var(--blackberry) 0%, var(--blackberry-deep) 100%);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  padding: 0 8px;
+  color: var(--copper-moon);
+}
+
+.brand h2 {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--pediment);
+}
+
+.brand p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #c3a9b7;
+}
+
+.nav-heading {
+  margin: 0 8px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #c3a9b7;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 4px;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #dccdd5;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.nav-link.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-link.active::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--copper-moon);
+}
+
+.nav-link.active svg {
+  color: var(--copper-moon);
+}
+
+.sidebar-footer {
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  font-size: 12px;
+  color: #a98c9c;
+}
+
+/* ---------- Main ---------- */
+
+.main-content {
+  margin-left: 260px;
+  min-height: 100vh;
+  padding: 48px clamp(24px, 4vw, 56px);
+  max-width: 1240px;
+  text-align: left;
+}
+
+.page-header {
+  margin-bottom: 36px;
+}
+
+.page-header h1 {
+  font-size: clamp(36px, 4vw, 48px);
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin-top: 10px;
+  max-width: 60ch;
+  font-size: 16px;
+  color: var(--text-soft);
+}
+
+/* ---------- Stat cards ---------- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  position: relative;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.stat-card:first-child {
+  color: var(--pediment);
+  background: linear-gradient(145deg, var(--blackberry), var(--kurobeni));
+  border-color: transparent;
+}
+
+.stat-card:first-child h2,
+.stat-card:first-child .stat-label {
+  color: var(--pediment);
+}
+
+.stat-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: var(--blackberry);
+  background: rgba(196, 157, 122, 0.28);
+  border-radius: 12px;
+}
+
+.stat-card:first-child .stat-icon {
+  color: var(--copper-moon);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.stat-card h2 {
+  margin-top: 2px;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+/* ---------- Inventory panel ---------- */
+
+.panel {
+  overflow: hidden;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  font-size: 28px;
+}
+
+.panel-header span {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+th {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blackberry);
+  background: rgba(212, 203, 196, 0.35);
+  border-bottom: 2px solid var(--copper-moon);
+}
+
+th:first-child {
+  border-top-left-radius: 8px;
+}
+
+th:last-child {
+  border-top-right-radius: 8px;
+}
+
+tbody tr {
+  transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+  background: rgba(150, 111, 130, 0.08);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+td:first-child {
+  font-weight: 600;
+  color: var(--blackberry);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Status pills ---------- */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+
+.status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-available {
+  color: var(--moscow-midnight);
+  background: rgba(33, 72, 81, 0.12);
+}
+
+.status-assigned {
+  color: var(--blackberry);
+  background: rgba(150, 111, 130, 0.22);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .brand {
+    margin-bottom: 24px;
+  }
+
+  .nav-link.active::before {
+    display: none;
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 28px 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
