@@ -33,13 +33,32 @@ const initialComputers = [
 export function ComputerProvider({ children }) {
   const [computers, setComputers] = useState(initialComputers);
 
+  function addComputer(computer) {
+    setComputers((prev) => {
+      const nextId =
+        prev.length > 0 ? Math.max(...prev.map((c) => c.id)) + 1 : 1;
+      return [...prev, { ...computer, id: nextId }];
+    });
+  }
+
+  function updateComputer(id, updates) {
+    setComputers((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...updates, id } : c))
+    );
+  }
+
+  function deleteComputer(id) {
+    setComputers((prev) => prev.filter((c) => c.id !== id));
+  }
+
   return (
-    <ComputerContext.Provider value={{ computers, setComputers }}>
+    <ComputerContext.Provider value={{computers, setComputers, addComputer, updateComputer, deleteComputer,}}>
       {children}
     </ComputerContext.Provider>
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useComputers() {
   const context = useContext(ComputerContext);
 
