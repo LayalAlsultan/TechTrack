@@ -33,7 +33,18 @@ export default function AboutUs() {
           computer availability, assignments, and
           inventory information.
         </p>
-      </section>
+</section>
+
+<section className="panel">
+  <h2>Meet Our Team</h2>
+  <p>TechTrack was developed by:</p>
+  <ul>
+    <li>Areen Al Ruwaitea - 222410547</li>
+    <li>Nouf Alsalman - 222410203</li>
+    <li>Layal Alsultan - 221410010</li>
+  </ul>
+</section>
+
     </div>
   );
 }
