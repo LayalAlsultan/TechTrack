@@ -9,17 +9,6 @@ import Computers from "./pages/Computers";
 
 import "./styles/global.css";
 
-function Placeholder({ title }) {
-  return (
-    <div className="page-header">
-      <h1>{title}</h1>
-      <p className="subtitle">
-        This page will be implemented
-      </p>
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <ComputerProvider>
