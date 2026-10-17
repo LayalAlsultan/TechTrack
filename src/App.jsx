@@ -1,5 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AboutUs from "./pages/AboutUs";
 
 import { ComputerProvider } from "./context/ComputerContext";
 import Layout from "./components/Layout";
@@ -30,7 +31,7 @@ export default function App() {
             />
             <Route
               path="/about"
-              element={<Placeholder title="About Us" />}
+              element={<AboutUs />}
             />
           </Route>
         </Routes>
