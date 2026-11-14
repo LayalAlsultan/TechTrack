@@ -186,3 +186,30 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Pagination ---------- */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pagination-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blackberry);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #a32b3c;
+}

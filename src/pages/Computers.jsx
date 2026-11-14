@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { useComputers } from "../context/ComputerContext";
 import ComputerForm from "../components/ComputerForm";
 import "../styles/computers.css";
 
 export default function Computers() {
-  const { computers, addComputer, updateComputer, deleteComputer } =
+    const { computers, page, isLastPage, error, goToNextPage, goToPreviousPage, addComputer, updateComputer, deleteComputer,} = 
     useComputers();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -68,9 +68,10 @@ export default function Computers() {
       <section className="panel">
         <div className="panel-header">
           <h2>All Computers</h2>
-          <span>{computers.length} assets</span>
+          <span>Page {page + 1}</span>
         </div>
 
+        {error && <p className="error-message">{error}</p>}
         <div className="table-wrapper">
           <table>
             <thead>
@@ -129,7 +130,31 @@ export default function Computers() {
                 ))
               )}
             </tbody>
-          </table>
+                    </table>
+        </div>
+
+        <div className="pagination">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={goToPreviousPage}
+            disabled={page === 0}
+          >
+            <ChevronLeft size={18} />
+            <span>Previous</span>
+          </button>
+
+          <span className="pagination-info">Page {page + 1}</span>
+
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={goToNextPage}
+            disabled={isLastPage}
+          >
+            <span>Next</span>
+            <ChevronRight size={18} />
+          </button>
         </div>
       </section>
 
