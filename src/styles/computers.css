@@ -186,3 +186,69 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Pagination ---------- */
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pagination-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blackberry);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #a32b3c;
+}
+
+/* ---------- Search by ID ---------- */
+
+.search-panel {
+  margin-bottom: 24px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-form input {
+  width: 160px;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.search-form input:focus {
+  border-color: var(--copper-moon);
+  outline: none;
+}
+
+.search-message {
+  margin-top: 14px;
+  font-size: 14px;
+  color: #a32b3c;
+}
+
+.search-result {
+  margin-top: 18px;
+}

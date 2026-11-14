@@ -4,10 +4,24 @@ import {
   UserRound,
 } from "lucide-react";
 
-import { useComputers } from "../context/ComputerContext";
+import { useEffect, useState } from "react";
+
+const API_URL = "http://localhost:8080/api/computers";
 
 export default function Dashboard() {
-  const { computers } = useComputers();
+    const [computers, setComputers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}?size=1000&sort=id,asc`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Server error");
+        }
+        return response.json();
+      })
+      .then((data) => setComputers(data))
+      .catch(() => setComputers([]));
+  }, []);
 
   const total = computers.length;
 

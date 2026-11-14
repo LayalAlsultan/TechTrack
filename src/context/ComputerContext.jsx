@@ -1,58 +1,103 @@
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ComputerContext = createContext(null);
 
-const initialComputers = [
-  {
-    id: 1,
-    name: "Dell Latitude 5440",
-    assetTag: "PC-001",
-    category: "Laptop",
-    assignedTo: "Ahmed",
-    status: "Assigned",
-  },
-  {
-    id: 2,
-    name: "HP ProBook 450",
-    assetTag: "PC-002",
-    category: "Laptop",
-    assignedTo: "",
-    status: "Available",
-  },
-  {
-    id: 3,
-    name: "Lenovo ThinkCentre",
-    assetTag: "PC-003",
-    category: "Desktop",
-    assignedTo: "Sara",
-    status: "Assigned",
-  },
-];
+const API_URL = "http://localhost:8080/api/computers";
+const PAGE_SIZE = 2;
 
 export function ComputerProvider({ children }) {
-  const [computers, setComputers] = useState(initialComputers);
+    const [computers, setComputers] = useState([]);
+    const [page, setPage] = useState(0);
+    const [isLastPage, setIsLastPage] = useState(false);
+    const [error, setError] = useState("");
+    const [reloadKey, setReloadKey] = useState(0);
 
-  function addComputer(computer) {
-    setComputers((prev) => {
-      const nextId =
-        prev.length > 0 ? Math.max(...prev.map((c) => c.id)) + 1 : 1;
-      return [...prev, { ...computer, id: nextId }];
+  useEffect(() => {
+    fetch(`${API_URL}?page=${page}&size=${PAGE_SIZE}&sort=id,asc`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Server error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setComputers(data);
+        setIsLastPage(data.length < PAGE_SIZE);
+        setError("");
+      })
+      .catch(() => {
+        setError("Could not load computers. Is the Spring server running?");
+      });
+  }, [page, reloadKey]);
+
+  function goToNextPage() {
+    setPage((prev) => prev + 1);
+  }
+
+  function goToPreviousPage() {
+    setPage((prev) => Math.max(prev - 1, 0));
+  } 
+
+  async function findComputerById(id) {
+    const response = await fetch(`${API_URL}/${id}`);
+
+    if (response.ok) {
+      return await response.json();
+    }
+    return null;
+  }
+
+    async function addComputer(computer) {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...computer,
+        assignedTo: computer.assignedTo || null,
+      }),
     });
+
+    if (response.ok) {
+      setReloadKey((prev) => prev + 1);
+    } else {
+      setError("Could not add the computer.");
+    }
   }
 
-  function updateComputer(id, updates) {
-    setComputers((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, ...updates, id } : c))
-    );
+
+  async function updateComputer(id, updates) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...updates,
+        assignedTo: updates.assignedTo || null,
+      }),
+    });
+
+    if (response.ok) {
+      setReloadKey((prev) => prev + 1);
+    } else {
+      setError("Could not update the computer.");
+    }
   }
 
-  function deleteComputer(id) {
-    setComputers((prev) => prev.filter((c) => c.id !== id));
+
+  async function deleteComputer(id) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      setReloadKey((prev) => prev + 1);
+    } else {
+      setError("Could not delete the computer.");
+    }
   }
 
   return (
-    <ComputerContext.Provider value={{computers, setComputers, addComputer, updateComputer, deleteComputer,}}>
+    <ComputerContext.Provider value={{computers, setComputers, page, isLastPage, error, goToNextPage, goToPreviousPage, addComputer, updateComputer, deleteComputer, findComputerById,}}>
       {children}
     </ComputerContext.Provider>
   );
