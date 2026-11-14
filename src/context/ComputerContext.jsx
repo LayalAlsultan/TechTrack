@@ -39,6 +39,15 @@ export function ComputerProvider({ children }) {
     setPage((prev) => Math.max(prev - 1, 0));
   } 
 
+  async function findComputerById(id) {
+    const response = await fetch(`${API_URL}/${id}`);
+
+    if (response.ok) {
+      return await response.json();
+    }
+    return null;
+  }
+
     async function addComputer(computer) {
     const response = await fetch(API_URL, {
       method: "POST",
@@ -67,7 +76,7 @@ export function ComputerProvider({ children }) {
   }
 
   return (
-    <ComputerContext.Provider value={{computers, setComputers, page, isLastPage, error, goToNextPage, goToPreviousPage, addComputer, updateComputer, deleteComputer,}}>
+    <ComputerContext.Provider value={{computers, setComputers, page, isLastPage, error, goToNextPage, goToPreviousPage, addComputer, updateComputer, deleteComputer, findComputerById,}}>
       {children}
     </ComputerContext.Provider>
   );
