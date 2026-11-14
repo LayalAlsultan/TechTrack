@@ -19,7 +19,11 @@ export default function ComputerForm({
   onCancel,
 }) {
   const isEditing = Boolean(initialData);
-  const [form, setForm] = useState(initialData ? { ...initialData } : emptyForm);
+    const [form, setForm] = useState(
+    initialData
+      ? { ...initialData, assignedTo: initialData.assignedTo ?? "" }
+      : emptyForm
+  );
   const [errors, setErrors] = useState({});
 
   useEffect(() => {

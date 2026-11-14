@@ -65,14 +65,35 @@ export function ComputerProvider({ children }) {
     }
   }
 
-  function updateComputer(id, updates) {
-    setComputers((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, ...updates, id } : c))
-    );
+
+  async function updateComputer(id, updates) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...updates,
+        assignedTo: updates.assignedTo || null,
+      }),
+    });
+
+    if (response.ok) {
+      setReloadKey((prev) => prev + 1);
+    } else {
+      setError("Could not update the computer.");
+    }
   }
 
-  function deleteComputer(id) {
-    setComputers((prev) => prev.filter((c) => c.id !== id));
+
+  async function deleteComputer(id) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      setReloadKey((prev) => prev + 1);
+    } else {
+      setError("Could not delete the computer.");
+    }
   }
 
   return (
